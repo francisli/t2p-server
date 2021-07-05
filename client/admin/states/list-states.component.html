@@ -6,17 +6,22 @@
   <div class="table-responsive">
     <table class="table table-striped table-sm">
       <thead>
-        <tr>
+        <tr class="state">
           <th class="col-1">Id</th>
           <th>Name</th>
+          <th class="state__configured">Configured?</th>
           <th>Bordering States</th>
         </tr>
       </thead>
       <app-shared-list type="states">
         <ng-template let-records="records" let-record="record">
-          <tr>
+          <tr class="state">
             <td><a [routerLink]="['/states', record.id]">{{record.id}}</a></td>
             <td><a [routerLink]="['/states', record.id]">{{record.name}}</a></td>
+            <td class="state__configured">
+              <i *ngIf="record.isConfigured" class="fas fa-check-square"></i>
+              <i *ngIf="!record.isConfigured" class="far fa-square"></i>
+            </td>
             <td>
               <ng-container *ngFor="let borderState of borderingStates(records, record); let first=first">
                 <span *ngIf="!first">,&nbsp;</span>
