@@ -6,7 +6,7 @@
   <div class="text-centered"><app-shared-loader></app-shared-loader></div>
 </ngb-alert>
 <div class="row">
-  <app-shared-form *ngIf="id" type="states" [id]="id" class="col-md-3">
+  <app-shared-form *ngIf="id" type="states" [hideButtons]="true" [id]="id" class="col-md-3">
     <ng-template let-record="record" let-error="error">
       <fieldset [disabled]="isConfiguring">
         <div class="form-group">
