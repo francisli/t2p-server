@@ -9,13 +9,20 @@
         <tr>
           <th class="col-1">Id</th>
           <th>Name</th>
+          <th>Bordering States</th>
         </tr>
       </thead>
       <app-shared-list type="states">
-        <ng-template let-record="record">
+        <ng-template let-records="records" let-record="record">
           <tr>
             <td><a [routerLink]="['/states', record.id]">{{record.id}}</a></td>
             <td><a [routerLink]="['/states', record.id]">{{record.name}}</a></td>
+            <td>
+              <ng-container *ngFor="let borderState of borderingStates(records, record); let first=first">
+                <span *ngIf="!first">,&nbsp;</span>
+                <a [routerLink]="['/states', borderState.id]">{{borderState.name}}</a>
+              </ng-container>
+            </td>
           </tr>
         </ng-template>
       </app-shared-list>

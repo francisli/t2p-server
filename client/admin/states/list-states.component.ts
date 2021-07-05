@@ -8,4 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListStatesComponent {
   constructor(public route: ActivatedRoute) {}
+
+  borderingStates(records: any[], record: any): any[] {
+    const borderStates = [...record.borderStates];
+    return borderStates.map((s) => records.find((r) => r.id === s));
+  }
 }
