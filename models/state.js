@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
           return StateCodes.codeMapping[this.id]?.abbr;
         },
       },
+      borderStates: {
+        type: DataTypes.JSONB,
+        field: 'border_states',
+      },
       isConfigured: DataTypes.BOOLEAN,
       dataSet: {
         type: DataTypes.JSONB,
