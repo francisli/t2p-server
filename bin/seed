@@ -65,10 +65,7 @@ async function parseStates(filePath) {
     const [id, , name, , borderStates] = parts;
     const [state] = await models.State.findOrBuild({ where: { id } });
     state.name = name;
-    state.borderStates = borderStates
-      .split(',')
-      .filter((s) => s.trim() !== '')
-      .map((s) => parseInt(s, 10));
+    state.borderStates = borderStates.split(',').filter((s) => s.trim() !== '');
     await state.save();
   }
 }
