@@ -10,7 +10,7 @@ const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
 const nemsisStates = require('../../lib/nemsis/states');
-const { City, State } = require('../../lib/codes');
+const { State } = require('../../lib/codes');
 
 const router = express.Router();
 
@@ -120,7 +120,7 @@ router.post(
                 facility.unit = sFacility['sFacility.06']?._text;
                 facility.address = sFacility['sFacility.07']?._text;
                 facility.cityId = sFacility['sFacility.08']?._text;
-                facility.cityName = await City.getName(sFacility['sFacility.08']?._text, {
+                facility.cityName = await models.City.getName(sFacility['sFacility.08']?._text, {
                   transaction,
                 });
                 facility.stateId = sFacility['sFacility.09']?._text;

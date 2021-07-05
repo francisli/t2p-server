@@ -23,7 +23,6 @@ describe('models', () => {
         const state = await models.State.findByPk('53');
         assert(state);
         await state.configure(userId);
-        console.log(state.dataSet);
         assert.deepStrictEqual(state.name, 'Washington');
         assert.deepStrictEqual(await state.countAgencies(), 495);
         assert.deepStrictEqual(await models.Facility.count(), 159);

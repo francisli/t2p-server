@@ -7,7 +7,6 @@ const path = require('path');
 
 const nemsis = require('../lib/nemsis');
 // const nemsisStates = require('../lib/nemsis/states');
-// const CityCodes = require('../lib/codes/city');
 const StateCodes = require('../lib/codes/state');
 
 module.exports = (sequelize, DataTypes) => {
@@ -161,9 +160,9 @@ module.exports = (sequelize, DataTypes) => {
                   facility.unit = sFacility['sFacility.06']?._text;
                   facility.address = sFacility['sFacility.07']?._text;
                   facility.cityId = sFacility['sFacility.08']?._text;
-                  // facility.cityName = await CityCodes.getName(sFacility['sFacility.08']?._text, {
-                  //   transaction,
-                  // });
+                  facility.cityName = await sequelize.models.City.getName(sFacility['sFacility.08']?._text, {
+                    transaction,
+                  });
                   facility.stateId = sFacility['sFacility.09']?._text;
                   facility.stateName = StateCodes.codeMapping[sFacility['sFacility.09']?._text]?.name;
                   facility.zip = sFacility['sFacility.10']?._text;
