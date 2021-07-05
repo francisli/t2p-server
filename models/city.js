@@ -18,7 +18,7 @@ function findByNameAndClass(cities, name, featureClass) {
 }
 
 module.exports = (sequelize, DataTypes) => {
-  class City extends Model {    
+  class City extends Model {
     static associate(models) {
       // associations can be defined here
       City.hasMany(models.Facility);
@@ -30,17 +30,15 @@ module.exports = (sequelize, DataTypes) => {
       if (cache.nameMapping[name] !== undefined) {
         return cache.nameMapping[name];
       }
-      const cities = await City.findAll(
-        {
-          where: {
-            featureName: {
-              [Op.iLike]: `%${name}%`,
-            },
-            stateNumeric,
+      const cities = await City.findAll({
+        where: {
+          featureName: {
+            [Op.iLike]: `%${name}%`,
           },
+          stateNumeric,
         },
-        options
-      );
+        transaction: options?.transaction,
+      });
       const searchOrder = [
         [name, 'Civil'],
         [`City of ${name}`, 'Civil'],
@@ -67,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       if (cache.codeMapping[code] !== undefined) {
         return cache.codeMapping[code];
       }
-      const city = await City.findByPk(code, options);
+      const city = await City.findByPk(code, { transaction: options?.transaction });
       if (city) {
         cache.codeMapping[code] = city.featureName;
         return city.featureName;
