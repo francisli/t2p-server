@@ -7,13 +7,49 @@ const path = require('path');
 
 const nemsis = require('../lib/nemsis');
 // const nemsisStates = require('../lib/nemsis/states');
-const StateCodes = require('../lib/codes/state');
+
+const stateCodes = {
+  values: [],
+  codeMapping: {},
+  nameMapping: {},
+};
+// state codes, downloaded from: https://www.census.gov/library/reference/code-lists/ansi/ansi-codes-for-states.html
+// manually modified to include border states data from: https://thefactfile.org/u-s-states-and-their-border-states/
+const psv = fs.readFileSync(path.resolve(__dirname, 'state.txt')).toString();
+const lines = psv.split('\n');
+// remove header row
+lines.shift();
+for (const line of lines) {
+  /// parse each line
+  const tokens = line.split('|');
+  const value = {
+    code: tokens[0],
+    abbr: tokens[1],
+    name: tokens[2],
+    gnsid: tokens[3],
+  };
+  stateCodes.values.push(value);
+  stateCodes.codeMapping[value.code] = value;
+  stateCodes.nameMapping[value.name] = value;
+}
 
 module.exports = (sequelize, DataTypes) => {
   class State extends Model {
     static associate(models) {
       // associations can be defined here
       State.hasMany(models.Agency, { as: 'agencies', foreignKey: 'stateId' });
+    }
+
+    static getAbbrForCode(code) {
+      return stateCodes.codeMapping[code]?.abbr;
+    }
+
+    static getCodeForName(name) {
+      return stateCodes.nameMapping[name]?.code;
+    }
+
+    static getNameForCode(code) {
+      return stateCodes.codeMapping[code]?.name;
     }
 
     toJSON() {
@@ -164,7 +200,7 @@ module.exports = (sequelize, DataTypes) => {
                     transaction,
                   });
                   facility.stateId = sFacility['sFacility.09']?._text;
-                  facility.stateName = StateCodes.codeMapping[sFacility['sFacility.09']?._text]?.name;
+                  facility.stateName = State.getNameForCode(sFacility['sFacility.09']?._text);
                   facility.zip = sFacility['sFacility.10']?._text;
                   facility.countyId = sFacility['sFacility.11']?._text;
                   if (sFacility['sFacility.13']) {
@@ -212,7 +248,7 @@ module.exports = (sequelize, DataTypes) => {
       abbr: {
         type: DataTypes.VIRTUAL(DataTypes.STRING),
         get() {
-          return StateCodes.codeMapping[this.id]?.abbr;
+          return State.getAbbrForCode(this.id);
         },
       },
       borderStates: {

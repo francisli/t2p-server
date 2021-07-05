@@ -10,7 +10,6 @@ const interceptors = require('../interceptors');
 const helpers = require('../helpers');
 const nemsis = require('../../lib/nemsis');
 const nemsisStates = require('../../lib/nemsis/states');
-const { State } = require('../../lib/codes');
 
 const router = express.Router();
 
@@ -124,7 +123,7 @@ router.post(
                   transaction,
                 });
                 facility.stateId = sFacility['sFacility.09']?._text;
-                facility.stateName = State.codeMapping[sFacility['sFacility.09']?._text]?.name;
+                facility.stateName = models.State.getNameForCode(sFacility['sFacility.09']?._text);
                 facility.zip = sFacility['sFacility.10']?._text;
                 facility.countyId = sFacility['sFacility.11']?._text;
                 if (sFacility['sFacility.13']) {

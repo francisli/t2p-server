@@ -155,7 +155,7 @@ async function seed() {
   const tmpDir = tmp.dirSync();
   try {
     /// parse and insert all the states
-    const statePath = path.resolve(__dirname, '../lib/codes/state.txt');
+    const statePath = path.resolve(__dirname, '../models/state.txt');
     console.log('Parsing and saving state data...');
     await parseStates(statePath);
     console.log('\n');

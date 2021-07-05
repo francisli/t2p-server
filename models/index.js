@@ -31,7 +31,7 @@ importModelsFromDir(__dirname);
 /// import models from any immediate subdirs
 fs.readdirSync(__dirname)
   .filter((dir) => {
-    return dir.indexOf('.') !== 0 && dir.slice(-3) !== '.js';
+    return dir.indexOf('.') !== 0 && dir.slice(-3) !== '.js' && dir.slice(-4) !== '.txt';
   })
   .forEach((dir) => {
     importModelsFromDir(path.join(__dirname, dir));
