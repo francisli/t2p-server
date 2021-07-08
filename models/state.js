@@ -6,7 +6,7 @@ const _ = require('lodash');
 const path = require('path');
 
 const nemsis = require('../lib/nemsis');
-// const nemsisStates = require('../lib/nemsis/states');
+const nemsisStates = require('../lib/nemsis/states');
 
 const stateCodes = {
   values: [],
@@ -135,9 +135,9 @@ module.exports = (sequelize, DataTypes) => {
           return;
         }
         // special-case handling for states
-        // if (nemsisStates[repo.slug] && nemsisStates[repo.slug].processStateRepoFiles) {
-        //   await nemsisStates[repo.slug].processStateRepoFiles(tmpDir, files.values, dataSet);
-        // }
+        if (nemsisStates[repo.slug] && nemsisStates[repo.slug].processStateRepoFiles) {
+          await nemsisStates[repo.slug].processStateRepoFiles(sequelize.models, tmpDir, files.values, dataSet);
+        }
         // add associated Agencies from the state data set
         await this.update({
           dataSet: {
