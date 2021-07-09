@@ -81,10 +81,9 @@ module.exports = (sequelize, DataTypes) => {
 
     async configure(userId) {
       // populate cities for the state and bordering states
-      const stateIds = [...this.borderStates];
-      stateIds.push(this.id);
+      const stateIds = [this.id, ...this.borderStates];
       for (const stateId of stateIds) {
-        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Importing city data...');
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating city database for ${State.getNameForCode(stateId)}...`);
         await sequelize.models.City.importCitiesForState(stateId);
       }
       // fetch NEMSIS state repositories list and find state repository

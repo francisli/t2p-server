@@ -47,9 +47,10 @@ router.get(
     });
     if (state) {
       if (req.user?.isAdmin && state.dataSet?.status) {
-        res.setHeader('X-Status', state.dataSet.status);
+        res.setHeader('X-Status-Code', state.dataSet.status.code);
+        res.setHeader('X-Status', state.dataSet.status.message);
       }
-      res.status(state.dataSet?.status ? HttpStatus.ACCEPTED : HttpStatus.OK).json(state.toJSON());
+      res.json(state.toJSON());
     } else {
       res.status(HttpStatus.NOT_FOUND).end();
     }

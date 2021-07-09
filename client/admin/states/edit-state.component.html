@@ -2,8 +2,10 @@
   <h1 class="h2">Edit State</h1>
 </div>
 <ngb-alert *ngIf="isConfiguring" type="info" [dismissible]="false">
-  <div>{{status || 'Please wait...'}}</div>
-  <div class="text-centered"><app-shared-loader></app-shared-loader></div>
+  <div><app-shared-loader></app-shared-loader> {{status || 'Please wait...'}}</div>
+</ngb-alert>
+<ngb-alert *ngIf="isError" type="danger" [dismissible]="false">
+  <div>{{status}}</div>
 </ngb-alert>
 <div class="row">
   <app-shared-form *ngIf="id" type="states" [hideButtons]="true" [id]="id" class="col-md-3">

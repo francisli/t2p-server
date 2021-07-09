@@ -2,9 +2,8 @@ import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } fro
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiService, UserService } from '../services';
 
-import { empty } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import clone from 'lodash/clone';
 
 @Component({
   selector: 'app-shared-form',
@@ -43,7 +42,7 @@ export class FormComponent {
         catchError((response: HttpErrorResponse) => {
           this.error = response.error;
           this.loading = false;
-          return empty();
+          return EMPTY;
         })
       )
       .subscribe((response: HttpResponse<any>) => {
@@ -66,7 +65,7 @@ export class FormComponent {
           catchError((response: HttpErrorResponse) => {
             this.error = response.error;
             this.loading = false;
-            return empty();
+            return EMPTY;
           })
         )
         .subscribe((response: HttpResponse<any>) => {
@@ -82,7 +81,7 @@ export class FormComponent {
           catchError((response: HttpErrorResponse) => {
             this.error = response.error;
             this.loading = false;
-            return empty();
+            return EMPTY;
           })
         )
         .subscribe((response: HttpResponse<any>) => {
@@ -102,7 +101,7 @@ export class FormComponent {
         catchError((response: HttpErrorResponse) => {
           this.error = response.error;
           this.loading = false;
-          return empty();
+          return EMPTY;
         })
       )
       .subscribe((response: HttpResponse<any>) => {
