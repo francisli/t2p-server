@@ -2,16 +2,11 @@
 
 'use strict';
 
-const fetch = require('node-fetch');
 const fs = require('fs');
-const LineReader = require('line-by-line');
-const mkdirp = require('mkdirp');
 const path = require('path');
-const shelljs = require('shelljs');
-const StreamZip = require('node-stream-zip');
 const tmp = require('tmp');
 
-const { download, unzip } = require('../lib/utils');
+const { download } = require('../lib/utils');
 
 /// disable output logging in db config before loading
 const config = require('../config/config');
@@ -57,69 +52,6 @@ async function parseCounties(filePath) {
   }
 }
 
-function parseCities(filePath) {
-  return new Promise((resolve, reject) => {
-    let isFirst = true;
-    const reader = new LineReader(filePath);
-    reader.on('error', (err) => reject(err));
-    reader.on('end', () => resolve());
-    reader.on('line', (line) => {
-      /// skip first header row
-      if (isFirst) {
-        isFirst = false;
-        return;
-      }
-      const parts = line.split('|');
-      if (parts.length > 1) {
-        const [
-          id,
-          featureName,
-          featureClass,
-          censusCode,
-          censusClassCode,
-          gsaCode,
-          opmCode,
-          stateNumeric,
-          stateAlpha,
-          countySequence,
-          countyNumeric,
-          countyName,
-          primaryLatitude,
-          primaryLongitude,
-          dateCreated,
-          dateEdited,
-        ] = parts;
-        if (!['Civil', 'Populated Place', 'Military', 'Census'].includes(featureClass)) {
-          return;
-        }
-        reader.pause();
-        process.stdout.write('.');
-        models.City.findOrBuild({ where: { id } })
-          .then(([city, _]) => {
-            city.featureName = featureName;
-            city.featureClass = featureClass;
-            (city.censusCode = censusCode), (city.censusClassCode = censusClassCode);
-            city.gsaCode = gsaCode;
-            city.opmCode = opmCode;
-            city.stateNumeric = stateNumeric;
-            city.stateAlpha = stateAlpha;
-            city.countySequence = countySequence;
-            city.countyNumeric = countyNumeric;
-            city.countyName = countyName;
-            city.primaryLatitude = primaryLatitude;
-            city.primaryLongitude = primaryLongitude;
-            city.dateCreated = dateCreated;
-            city.dateEdited = dateEdited;
-            return city.save();
-          })
-          .then(() => {
-            reader.resume();
-          });
-      }
-    });
-  });
-}
-
 async function seed() {
   const tmpDir = tmp.dirSync();
   try {
@@ -128,25 +60,15 @@ async function seed() {
     console.log('Parsing and saving state data...');
     await parseStates(statePath);
     console.log('\n');
-    /*
+
     /// download and seed county data
     const countyPath = path.resolve(tmpDir.name, 'county.txt');
     console.log('Downloading county data...');
     await download('https://www2.census.gov/geo/docs/reference/codes/files/national_county.txt', countyPath);
-    console.log('Parsing and saving county data...')
+    console.log('Parsing and saving county data...');
     await parseCounties(countyPath);
     console.log('\n');
 
-    /// download and seed city data
-    const cityPath = path.resolve(tmpDir.name, 'city.zip');
-    console.log('Downloading city data...');
-    await download('https://geonames.usgs.gov/docs/federalcodes/NationalFedCodes.zip', cityPath);
-    console.log('Unzipping city data...');
-    const unzippedPath = await unzip(cityPath, tmpDir);
-    console.log('Parsing and saving city data...');
-    await parseCities(unzippedPath);
-    console.log('\n');
-*/
     console.log('Done!');
   } finally {
     models.sequelize.close();
