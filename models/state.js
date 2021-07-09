@@ -63,45 +63,42 @@ module.exports = (sequelize, DataTypes) => {
 
     async startConfiguration(user) {
       // synchronously set starting status state...
-      await this.update({
-        dataSet: {
-          status: {
-            code: HttpStatus.ACCEPTED,
-            message: 'Starting state configuration...',
-          },
-        },
-      });
+      await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Starting state configuration...');
       // configure in background...
       this.configure(user.id);
     }
 
+    setConfigurationStatus(code, message) {
+      return this.update({
+        dataSet: {
+          status: {
+            code,
+            message,
+          },
+        },
+      });
+    }
+
     async configure(userId) {
+      // populate cities for the state and bordering states
+      const stateIds = [...this.borderStates];
+      stateIds.push(this.id);
+      for (const stateId of stateIds) {
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Importing city data...');
+        await sequelize.models.City.importCitiesForState(stateId);
+      }
       // fetch NEMSIS state repositories list and find state repository
       const repos = await nemsis.getStateRepos();
       const repo = _.find(repos.values, { name: this.name });
       if (!repo) {
-        await this.update({
-          dataSet: {
-            status: {
-              code: HttpStatus.NOT_FOUND,
-              message: 'NEMSIS state data repository not found.',
-            },
-          },
-        });
+        await this.setConfigurationStatus(HttpStatus.NOT_FOUND, 'NEMSIS state data repository not found.');
         return;
       }
       // download all the files in the state repository
       const files = await nemsis.getStateRepoFiles(repo.slug);
       const tmpDir = await nemsis.downloadRepoFiles(repo.slug, files.values);
       try {
-        await this.update({
-          dataSet: {
-            status: {
-              code: HttpStatus.ACCEPTED,
-              message: 'Processing downloaded NEMSIS state data...',
-            },
-          },
-        });
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Processing downloaded NEMSIS state data...');
         // find the NEMSIS state data set and schematron files
         let dataSet = null;
         let schematronXml = null;
@@ -113,25 +110,11 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
         if (!dataSet) {
-          await this.update({
-            dataSet: {
-              status: {
-                code: HttpStatus.NOT_FOUND,
-                message: 'NEMSIS state data set not found.',
-              },
-            },
-          });
+          await this.setConfigurationStatus(HttpStatus.NOT_FOUND, 'NEMSIS state data set not found.');
           return;
         }
         if (!schematronXml) {
-          await this.update({
-            dataSet: {
-              status: {
-                code: HttpStatus.NOT_FOUND,
-                message: 'NEMSIS state schematron not found.',
-              },
-            },
-          });
+          await this.setConfigurationStatus(HttpStatus.NOT_FOUND, 'NEMSIS state schematron not found.');
           return;
         }
         // special-case handling for states
@@ -139,14 +122,7 @@ module.exports = (sequelize, DataTypes) => {
           await nemsisStates[repo.slug].processStateRepoFiles(sequelize.models, tmpDir, files.values, dataSet);
         }
         // add associated Agencies from the state data set
-        await this.update({
-          dataSet: {
-            status: {
-              code: HttpStatus.ACCEPTED,
-              message: 'Populating state agencies...',
-            },
-          },
-        });
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Populating state agencies...');
         if (dataSet.json.StateDataSet.sAgency && dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
           await sequelize.transaction(async (transaction) => {
             for (const sAgency of dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
@@ -167,14 +143,7 @@ module.exports = (sequelize, DataTypes) => {
           });
         }
         // add associated Facilities from state data set
-        await this.update({
-          dataSet: {
-            status: {
-              code: HttpStatus.ACCEPTED,
-              message: 'Populating state facilities...',
-            },
-          },
-        });
+        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Populating state facilities...');
         if (dataSet.json.StateDataSet.sFacility && dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
           if (!Array.isArray(dataSet.json.StateDataSet.sFacility.sFacilityGroup)) {
             dataSet.json.StateDataSet.sFacility.sFacilityGroup = [dataSet.json.StateDataSet.sFacility.sFacilityGroup];
@@ -228,14 +197,7 @@ module.exports = (sequelize, DataTypes) => {
           schematronXml,
         });
       } catch (error) {
-        await this.update({
-          dataSet: {
-            status: {
-              code: HttpStatus.INTERNAL_SERVER_ERROR,
-              message: error.toString(),
-            },
-          },
-        });
+        await this.setConfigurationStatus(HttpStatus.INTERNAL_SERVER_ERROR, error.toString());
       } finally {
         tmpDir.removeCallback();
       }
