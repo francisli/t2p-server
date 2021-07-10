@@ -98,8 +98,11 @@ module.exports = (sequelize, DataTypes) => {
           return this.geog?.coordinates?.[1]?.toString();
         },
         set(newValue) {
-          this.geog = this.geog || { type: 'Point', coordinates: [0, 0] };
-          this.geog.coordinates[1] = parseFloat(newValue.toString);
+          const geog = this.geog || { type: 'Point', coordinates: [0, 0] };
+          geog.coordinates[1] = parseFloat(newValue.toString());
+          this.setDataValue('geog', geog);
+          const type = this.createdByAgencyId ? 'dFacility' : 'sFacility';
+          this.setNemsisValue([`${type}.FacilityGroup`, `${type}.13`], `${geog.coordinates[1]},${geog.coordinates[0]}`);
         },
       },
       lng: {
@@ -108,8 +111,11 @@ module.exports = (sequelize, DataTypes) => {
           return this.geog?.coordinates?.[0]?.toString();
         },
         set(newValue) {
-          this.geog = this.geog || { type: 'Point', coordinates: [0, 0] };
-          this.geog.coordinates[0] = parseFloat(newValue.toString);
+          const geog = this.geog || { type: 'Point', coordinates: [0, 0] };
+          geog.coordinates[0] = parseFloat(newValue.toString());
+          this.setDataValue('geog', geog);
+          const type = this.createdByAgencyId ? 'dFacility' : 'sFacility';
+          this.setNemsisValue([`${type}.FacilityGroup`, `${type}.13`], `${geog.coordinates[1]},${geog.coordinates[0]}`);
         },
       },
       geog: DataTypes.GEOGRAPHY,
@@ -155,7 +161,13 @@ module.exports = (sequelize, DataTypes) => {
     if (record.cityName) {
       record.setDataValue('cityId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]));
     }
-    record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
+    record.setDataValue(
+      'stateName',
+      await sequelize.models.State.getNameForCode(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]), options)
+    );
+    if (record.stateName) {
+      record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
+    }
     record.setDataValue('zip', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.10`]));
     record.setDataValue(
       'countyName',

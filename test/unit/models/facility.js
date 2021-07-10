@@ -10,17 +10,17 @@ describe('models', () => {
   describe('Facility', () => {
     describe('findNear()', () => {
       beforeEach(async () => {
-        await helpers.loadFixtures(['states', 'facilities']);
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'facilities']);
       });
 
       it('should return a paginated list of facilities near the specified point', async () => {
-        const { docs, total } = await models.Facility.findNear('37.7873437', '-122.4536086');
-        assert.deepStrictEqual(total, 103);
+        const { docs, total } = await models.Facility.findNear('37.7866029', '-122.4560444');
+        assert.deepStrictEqual(total, 127);
         assert.deepStrictEqual(docs[0].name, 'CPMC - 3801 Sacramento Street'); /// this is the exact match to the coordinates above
       });
 
       it('should support additional query conditions', async () => {
-        const { docs, total } = await models.Facility.findNear('37.7873437', '-122.4536086', {
+        const { docs, total } = await models.Facility.findNear('37.7866029', '-122.4560444', {
           where: {
             name: { [models.Sequelize.Op.iLike]: '%cpmc%' },
           },
@@ -36,9 +36,6 @@ describe('models', () => {
     describe('geog', () => {
       it('should be set automatically when assigning to lat/lng', async () => {
         const facility = await models.Facility.create({
-          address: '3698 Sacramento Street',
-          city: 'San Francisco',
-          state: 'CA',
           lat: '37.7873437',
           lng: '-122.4536086',
         });
@@ -51,7 +48,7 @@ describe('models', () => {
         nock('https://maps.googleapis.com:443', { encodedQueryParams: true })
           .get('/maps/api/geocode/json')
           .query({
-            address: '3698%20Sacramento%20Street%2C%20San%20Francisco%2C%20CA',
+            address: '3698%20Sacramento%20Street%2C%20City%20of%20San%20Francisco%2C%20California',
             key: process.env.GOOGLE_MAPS_API_KEY,
           })
           .reply(
@@ -60,11 +57,17 @@ describe('models', () => {
             ['Content-Type', 'application/json; charset=UTF-8', 'Content-Encoding', 'gzip']
           );
 
+        await helpers.loadFixtures(['cities', 'states']);
         const facility = await models.Facility.create({
-          address: '3698 Sacramento Street',
-          cityName: 'San Francisco',
-          stateName: 'CA',
+          data: {
+            'sFacility.FacilityGroup': {
+              'sFacility.07': { _text: '3698 Sacramento Street' },
+              'sFacility.08': { _text: '2411786'},
+              'sFacility.09': { _text: '06'},
+            }
+          }
         });
+
         await facility.geocode();
         assert.deepStrictEqual(facility.lat, '37.7873437');
         assert.deepStrictEqual(facility.lng, '-122.4536086');
