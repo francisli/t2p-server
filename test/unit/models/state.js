@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
 
 describe('models', () => {
@@ -33,6 +34,7 @@ describe('models', () => {
         if (!process.env.CI) {
           this.skip();
         }
+        geonamesMocks.mockWashingtonDownloads();
         nemsisMocks.mockReposRequest();
         nemsisMocks.mockWashingtonFilesRequest();
         nemsisMocks.mockWashingtonDownloads();

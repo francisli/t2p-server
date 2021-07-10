@@ -20,6 +20,7 @@ export class EditStateComponent {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
+    this.poll();
   }
 
   onDelete() {
@@ -50,6 +51,8 @@ export class EditStateComponent {
           this.status = res.headers.get('X-Status');
           const statusCode = res.headers.get('X-Status-Code');
           if (statusCode === '202') {
+            this.isConfiguring = true;
+            this.isError = false;
             this.poll();
           } else {
             this.isConfiguring = false;
