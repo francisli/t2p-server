@@ -8,3 +8,4 @@ tmp
 webpack-stats.json
 nemsis/xsd/*.json
 \~\$*.xlsx
+*.v350

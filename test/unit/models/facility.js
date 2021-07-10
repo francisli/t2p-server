@@ -1,8 +1,10 @@
 const assert = require('assert');
 const nock = require('nock');
+const path = require('path');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const nemsis = require('../../../lib/nemsis');
 
 describe('models', () => {
   describe('Facility', () => {
@@ -66,6 +68,46 @@ describe('models', () => {
         await facility.geocode();
         assert.deepStrictEqual(facility.lat, '37.7873437');
         assert.deepStrictEqual(facility.lng, '-122.4536086');
+      });
+    });
+
+    describe('save()', () => {
+      it('should extract from NEMSIS data into fields', async () => {
+        await helpers.loadFixtures(['cities', 'counties', 'states', 'users']);
+        const dataSet = await nemsis.parseStateDataSet(
+          path.resolve(__dirname, '../../mocks/nemsis/washington/Resources/WA_StateDataSet.xml')
+        );
+        const { sFacilityGroup } = dataSet.json.StateDataSet.sFacility;
+        const sFacility = sFacilityGroup['sFacility.FacilityGroup'][0];
+        const facility = models.Facility.build();
+        facility.data = {
+          'sFacility.01': sFacilityGroup['sFacility.01'],
+          'sFacility.FacilityGroup': {
+            ...sFacility,
+            'sFacility.05': { _text: 'Test NPI' },
+            'sFacility.06': { _text: 'Test Unit' },
+          },
+        };
+        await facility.save();
+
+        assert.deepStrictEqual(facility.type, '1701005');
+        assert.deepStrictEqual(facility.name, 'Astria Regional Medical Center');
+        assert.deepStrictEqual(facility.locationCode, 'HAC.FS.00000102');
+        assert.deepStrictEqual(facility.primaryDesignation, '9908007');
+        assert.deepStrictEqual(facility.primaryNationalProviderId, 'Test NPI');
+        assert.deepStrictEqual(facility.unit, 'Test Unit');
+        assert.deepStrictEqual(facility.address, '110 S 9th Ave');
+        assert.deepStrictEqual(facility.cityId, '2412314');
+        assert.deepStrictEqual(facility.cityName, 'City of Yakima');
+        assert.deepStrictEqual(facility.stateId, '53');
+        assert.deepStrictEqual(facility.zip, '98902');
+        assert.deepStrictEqual(facility.countyId, '53077');
+        assert.deepStrictEqual(facility.countyName, 'Yakima County');
+        assert.deepStrictEqual(facility.country, 'US');
+        assert.deepStrictEqual(facility.geog?.coordinates, [-120.52111, 46.59662]);
+        assert.deepStrictEqual(facility.lat, '46.59662');
+        assert.deepStrictEqual(facility.lng, '-120.52111');
+        assert.deepStrictEqual(facility.primaryPhone, '509-575-5000');
       });
     });
   });

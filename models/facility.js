@@ -92,8 +92,26 @@ module.exports = (sequelize, DataTypes) => {
         field: 'county_name',
       },
       country: DataTypes.STRING,
-      lat: DataTypes.STRING,
-      lng: DataTypes.STRING,
+      lat: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.geog?.coordinates?.[1]?.toString();
+        },
+        set(newValue) {
+          this.geog = this.geog || { type: 'Point', coordinates: [0, 0] };
+          this.geog.coordinates[1] = parseFloat(newValue.toString);
+        },
+      },
+      lng: {
+        type: DataTypes.VIRTUAL(DataTypes.STRING),
+        get() {
+          return this.geog?.coordinates?.[0]?.toString();
+        },
+        set(newValue) {
+          this.geog = this.geog || { type: 'Point', coordinates: [0, 0] };
+          this.geog.coordinates[0] = parseFloat(newValue.toString);
+        },
+      },
       geog: DataTypes.GEOGRAPHY,
       primaryPhone: {
         type: DataTypes.STRING,
@@ -118,35 +136,38 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Facility.beforeSave((record) => {
-    if (record.createdByAgencyId) {
-      if (!record.id) {
-        record.setDataValue('id', record.data?._attributes?.UUID);
-      }
-      record.setDataValue('type', record.data?.['dFacility.01']?._text);
-      record.setDataValue('name', record.data?.['dFacility.FacilityGroup']?.['dFacility.02']?._text);
-      record.setDataValue('locationCode', record.data?.['dFacility.FacilityGroup']?.['dFacility.03']?._text);
-      record.setDataValue('primaryDesignation', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.04']));
-      record.setDataValue('primaryNationalProviderId', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.05']));
-      record.setDataValue('unit', record.data?.['dFacility.FacilityGroup']?.['dFacility.06']?._text);
-      record.setDataValue('address', record.data?.['dFacility.FacilityGroup']?.['dFacility.07']?._text);
-      record.setDataValue('cityId', record.data?.['dFacility.FacilityGroup']?.['dFacility.08']?._text);
-      record.setDataValue('stateId', record.data?.['dFacility.FacilityGroup']?.['dFacility.09']?._text);
-      record.setDataValue('zip', record.data?.['dFacility.FacilityGroup']?.['dFacility.10']?._text);
-      record.setDataValue('countyId', record.data?.['dFacility.FacilityGroup']?.['dFacility.11']?._text);
-      record.setDataValue('country', record.data?.['dFacility.FacilityGroup']?.['dFacility.12']?._text);
-      record.setDataValue('geog', Base.geometryFor(record.data?.['dFacility.FacilityGroup']?.['dFacility.13']?._text));
-      record.setDataValue('primaryPhone', Base.firstValueOf(record.data?.['dFacility.FacilityGroup']?.['dFacility.15']));
-      record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (record.lat && record.lng) {
-        record.geog = {
-          type: 'Point',
-          coordinates: [parseFloat(record.lng), parseFloat(record.lat)],
-        };
-      }
+  Facility.beforeSave(async (record, options) => {
+    if (!record.id) {
+      record.setDataValue('id', record.data?._attributes?.UUID);
     }
+    const type = record.createdByAgencyId ? 'dFacility' : 'sFacility';
+    record.setDataValue('type', record.getFirstNemsisValue([`${type}.01`]));
+    record.setDataValue('name', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.02`]));
+    record.setDataValue('locationCode', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.03`]));
+    record.setDataValue('primaryDesignation', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.04`]));
+    record.setDataValue('primaryNationalProviderId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.05`]));
+    record.setDataValue('unit', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.06`]));
+    record.setDataValue('address', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.07`]));
+    record.setDataValue(
+      'cityName',
+      await sequelize.models.City.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]), options)
+    );
+    if (record.cityName) {
+      record.setDataValue('cityId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.08`]));
+    }
+    record.setDataValue('stateId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.09`]));
+    record.setDataValue('zip', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.10`]));
+    record.setDataValue(
+      'countyName',
+      await sequelize.models.County.getName(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]))
+    );
+    if (record.countyName) {
+      record.setDataValue('countyId', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.11`]));
+    }
+    record.setDataValue('country', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.12`]));
+    record.setDataValue('geog', Base.geometryFor(record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.13`])));
+    record.setDataValue('primaryPhone', record.getFirstNemsisValue([`${type}.FacilityGroup`, `${type}.15`]));
+    record.setDataValue('isValid', record.data?._attributes?.['pr:isValid']);
   });
 
   sequelizePaginate.paginate(Facility);

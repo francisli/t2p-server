@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async getCode(name, stateNumeric, options) {
+      if (!name || !stateNumeric) {
+        return null;
+      }
       if (cache.nameMapping[name] !== undefined) {
         return cache.nameMapping[name];
       }

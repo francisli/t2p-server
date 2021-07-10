@@ -160,33 +160,19 @@ module.exports = (sequelize, DataTypes) => {
                 for (const sFacility of sFacilityGroup['sFacility.FacilityGroup']) {
                   const [facility] = await sequelize.models.Facility.findOrBuild({
                     where: {
-                      stateId: sFacility['sFacility.09'] ? sFacility['sFacility.09']._text : null,
-                      locationCode: sFacility['sFacility.03'] ? sFacility['sFacility.03']._text : null,
+                      stateId: sFacility['sFacility.09']?._text || null,
+                      locationCode: sFacility['sFacility.03']?._text || null,
                     },
                     transaction,
                   });
-                  facility.type = type;
-                  facility.name = sFacility['sFacility.02']?._text;
-                  facility.unit = sFacility['sFacility.06']?._text;
-                  facility.address = sFacility['sFacility.07']?._text;
-                  facility.cityName = await sequelize.models.City.getName(sFacility['sFacility.08']?._text, {
-                    transaction,
-                  });
-                  facility.cityId = facility.cityName ? sFacility['sFacility.08']?._text : null;
-                  facility.stateId = sFacility['sFacility.09']?._text;
-                  facility.stateName = State.getNameForCode(sFacility['sFacility.09']?._text);
-                  facility.zip = sFacility['sFacility.10']?._text;
-                  facility.countyId = sFacility['sFacility.11']?._text;
-                  if (sFacility['sFacility.13']) {
-                    const m = sFacility['sFacility.13']._text.match(/([-\d.]+),([-\d.]+)/);
-                    if (m) {
-                      [, facility.lat, facility.lng] = m;
-                    }
-                  } else if (process.env.NODE_ENV !== 'test') {
+                  facility.data = {
+                    'sFacility.01': type,
+                    'sFacility.FacilityGroup': sFacility,
+                  };
+                  if (!sFacility['sFacility.13'] && process.env.NODE_ENV !== 'test') {
                     /// don't perform in test, so we don't exceed request quotas
                     await facility.geocode();
                   }
-                  facility.dataSet = sFacility;
                   facility.createdById = userId;
                   facility.updatedById = userId;
                   await facility.save({ transaction });
