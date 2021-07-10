@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { FormComponent } from '../../shared/components';
 import { ApiService, NavigationService } from '../../shared/services';
 
 @Component({
@@ -13,6 +14,7 @@ export class EditStateComponent {
   status: string = null;
   isConfiguring = false;
   isError = false;
+  @ViewChild('form') form: FormComponent;
 
   constructor(private api: ApiService, private navigation: NavigationService, private route: ActivatedRoute) {}
 
@@ -51,8 +53,10 @@ export class EditStateComponent {
             this.poll();
           } else {
             this.isConfiguring = false;
-            if (statusCode !== '200') {
+            if (statusCode && statusCode !== '200') {
               this.isError = true;
+            } else {
+              this.form.refresh();
             }
           }
         });

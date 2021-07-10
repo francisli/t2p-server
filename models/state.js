@@ -123,6 +123,9 @@ module.exports = (sequelize, DataTypes) => {
         // add associated Agencies from the state data set
         await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Populating state agencies...');
         if (dataSet.json.StateDataSet.sAgency && dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
+          if (!Array.isArray(dataSet.json.StateDataSet.sAgency.sAgencyGroup)) {
+            dataSet.json.StateDataSet.sAgency.sAgencyGroup = [dataSet.json.StateDataSet.sAgency.sAgencyGroup];
+          }
           await sequelize.transaction(async (transaction) => {
             for (const sAgency of dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
               const [agency] = await sequelize.models.Agency.findOrBuild({
@@ -151,6 +154,9 @@ module.exports = (sequelize, DataTypes) => {
             for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
               const type = sFacilityGroup['sFacility.01']._text;
               if (sFacilityGroup['sFacility.FacilityGroup']) {
+                if (!Array.isArray(sFacilityGroup['sFacility.FacilityGroup'])) {
+                  sFacilityGroup['sFacility.FacilityGroup'] = [sFacilityGroup['sFacility.FacilityGroup']];
+                }
                 for (const sFacility of sFacilityGroup['sFacility.FacilityGroup']) {
                   const [facility] = await sequelize.models.Facility.findOrBuild({
                     where: {
@@ -163,10 +169,10 @@ module.exports = (sequelize, DataTypes) => {
                   facility.name = sFacility['sFacility.02']?._text;
                   facility.unit = sFacility['sFacility.06']?._text;
                   facility.address = sFacility['sFacility.07']?._text;
-                  facility.cityId = sFacility['sFacility.08']?._text;
                   facility.cityName = await sequelize.models.City.getName(sFacility['sFacility.08']?._text, {
                     transaction,
                   });
+                  facility.cityId = facility.cityName ? sFacility['sFacility.08']?._text : null;
                   facility.stateId = sFacility['sFacility.09']?._text;
                   facility.stateName = State.getNameForCode(sFacility['sFacility.09']?._text);
                   facility.zip = sFacility['sFacility.10']?._text;
