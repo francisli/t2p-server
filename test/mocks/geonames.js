@@ -14,11 +14,11 @@ function mockDownloads(filePaths) {
 
 function mockCaliforniaDownloads() {
   mockDownloads(['CA_FedCodes.zip', 'AZ_FedCodes.zip', 'NV_FedCodes.zip', 'OR_FedCodes.zip']);
-};
+}
 
 function mockWashingtonDownloads() {
   mockDownloads(['WA_FedCodes.zip', 'OR_FedCodes.zip', 'ID_FedCodes.zip']);
-};
+}
 
 module.exports = {
   mockCaliforniaDownloads,
