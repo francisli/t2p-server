@@ -2,6 +2,7 @@ const assert = require('assert');
 
 const helpers = require('../../helpers');
 const models = require('../../../models');
+const geonamesMocks = require('../../mocks/geonames');
 
 describe('models', () => {
   describe('City', () => {
@@ -25,8 +26,9 @@ describe('models', () => {
 
     describe('.importCitiesForState()', () => {
       it('downloads and imports city data for a given state', async () => {
-        await models.City.importCitiesForState('44');
-        assert.deepStrictEqual(await models.City.count(), 382);
+        geonamesMocks.mockWashingtonDownloads();
+        await models.City.importCitiesForState('53');
+        assert.deepStrictEqual(await models.City.count(), 1);
       });
     });
   });

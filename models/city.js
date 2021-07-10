@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async parseCities(filePath) {
+    static parseCities(filePath) {
       return new Promise((resolve, reject) => {
         let isFirst = true;
         const reader = new LineReader(filePath);

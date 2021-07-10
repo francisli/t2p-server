@@ -6,6 +6,7 @@ const session = require('supertest-session');
 const helpers = require('../../helpers');
 const app = require('../../../app');
 const models = require('../../../models');
+const geonamesMocks = require('../../mocks/geonames');
 const nemsisMocks = require('../../mocks/nemsis');
 
 describe('/api/states', () => {
@@ -32,6 +33,7 @@ describe('/api/states', () => {
       if (!process.env.CI) {
         this.skip();
       }
+      geonamesMocks.mockWashingtonDownloads();
       nemsisMocks.mockReposRequest();
       nemsisMocks.mockWashingtonFilesRequest();
       nemsisMocks.mockWashingtonDownloads();
@@ -40,7 +42,7 @@ describe('/api/states', () => {
       /// start polling for completion
       for (;;) {
         response = await testSession.get(`/api/states/53`);
-        if (response.accepted) {
+        if (response.headers['x-status-code'] === '202') {
           await helpers.sleep(1000);
         } else {
           assert(response.status, HttpStatus.OK);
@@ -58,6 +60,7 @@ describe('/api/states', () => {
       if (!process.env.CI) {
         this.skip();
       }
+      geonamesMocks.mockCaliforniaDownloads();
       nemsisMocks.mockReposRequest();
       nemsisMocks.mockCaliforniaFilesRequest();
       nemsisMocks.mockCaliforniaDownloads();
@@ -66,7 +69,7 @@ describe('/api/states', () => {
       /// start polling for completion
       for (;;) {
         response = await testSession.get(`/api/states/06`);
-        if (response.accepted) {
+        if (response.headers['x-status-code'] === '202') {
           await helpers.sleep(1000);
         } else {
           assert(response.status, HttpStatus.OK);
@@ -95,11 +98,16 @@ describe('/api/states', () => {
     it('should return accepted for a record in processing', async () => {
       await models.State.update(
         {
-          dataSet: { status: 'Processing' },
+          dataSet: {
+            status: {
+              code: 202,
+              message: 'Processing',
+            },
+          },
         },
         { where: { id: '01' } }
       );
-      await testSession.get(`/api/states/01`).expect(HttpStatus.ACCEPTED).expect('X-Status', 'Processing');
+      await testSession.get(`/api/states/01`).expect(HttpStatus.OK).expect('X-Status', 'Processing').expect('X-Status-Code', '202');
     });
 
     it('should return ok for a record done processing', async () => {
