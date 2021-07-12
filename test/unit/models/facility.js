@@ -62,10 +62,10 @@ describe('models', () => {
           data: {
             'sFacility.FacilityGroup': {
               'sFacility.07': { _text: '3698 Sacramento Street' },
-              'sFacility.08': { _text: '2411786'},
-              'sFacility.09': { _text: '06'},
-            }
-          }
+              'sFacility.08': { _text: '2411786' },
+              'sFacility.09': { _text: '06' },
+            },
+          },
         });
 
         await facility.geocode();
