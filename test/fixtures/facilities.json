@@ -75,7 +75,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Lyon - Martin Womens Health Services" },
           "sFacility.03": { "_text": "22362" },
@@ -126,7 +126,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "On Lok Senior Health Services" },
           "sFacility.03": { "_text": "22497" },
@@ -227,7 +227,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Magnet" },
           "sFacility.03": { "_text": "22367" },
@@ -278,7 +278,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Zuckerberg San Francisco General Hospital and Trauma Center" },
           "sFacility.03": { "_text": "20386" },
@@ -329,7 +329,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Healthright 360" },
           "sFacility.03": { "_text": "22255" },
@@ -430,7 +430,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Kentfield Hospital San Francisco" },
           "sFacility.03": { "_text": "62463" },
@@ -731,7 +731,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "San Francisco Free Clinic" },
           "sFacility.03": { "_text": "22711" },
@@ -782,7 +782,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services" },
           "sFacility.03": { "_text": "22456" },
@@ -833,7 +833,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Cypress at Golden Gate" },
           "sFacility.03": { "_text": "64674" },
@@ -984,7 +984,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Mission Neighborhood Resource Center" },
           "sFacility.03": { "_text": "22418" },
@@ -1035,7 +1035,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Lifeways Pace At The Coronet" },
           "sFacility.03": { "_text": "22343" },
@@ -1136,7 +1136,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Baart Turk Street Clinic" },
           "sFacility.03": { "_text": "21911" },
@@ -1187,7 +1187,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Merriouns Psychological Institute" },
           "sFacility.03": { "_text": "22398" },
@@ -1238,7 +1238,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701017",
+        "sFacility.01": { "_text": "1701017" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Satellite Healthcare San Francisco" },
           "sFacility.03": { "_text": "64647" },
@@ -1290,7 +1290,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Curry Senior Center" },
           "sFacility.03": { "_text": "22121" },
@@ -1341,7 +1341,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "University of California, San Francisco Medical Center at Mount Zion" },
           "sFacility.03": { "_text": "20505" },
@@ -1492,7 +1492,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "UCSF Medical Center at Mission Bay" },
           "sFacility.03": { "_text": "62338" },
@@ -1543,7 +1543,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "CPMC - 3801 Sacramento Street" },
           "sFacility.03": { "_text": "64704" },
@@ -1595,7 +1595,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Instituto Familiar De La Raza - Outpatient" },
           "sFacility.03": { "_text": "22282" },
@@ -1646,7 +1646,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Planned Parenthood San Francisco Center" },
           "sFacility.03": { "_text": "22612" },
@@ -1748,7 +1748,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Richmond Maxi - Center" },
           "sFacility.03": { "_text": "22677" },
@@ -2049,7 +2049,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Women's Community Clinic/Tides Center" },
           "sFacility.03": { "_text": "22931" },
@@ -2100,7 +2100,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - Taraval" },
           "sFacility.03": { "_text": "22462" },
@@ -2151,7 +2151,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Chinese Hospital" },
           "sFacility.03": { "_text": "20065" },
@@ -2202,7 +2202,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Glide Health Services" },
           "sFacility.03": { "_text": "22220" },
@@ -2303,7 +2303,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Chinese Community Health Services" },
           "sFacility.03": { "_text": "22012" },
@@ -2504,7 +2504,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "CPMC-Van Ness" },
           "sFacility.03": { "_text": "62636" },
@@ -2555,7 +2555,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "30th Street Community Clinic" },
           "sFacility.03": { "_text": "21789" },
@@ -2606,7 +2606,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Saint Francis Memorial Hospital" },
           "sFacility.03": { "_text": "20447" },
@@ -2657,7 +2657,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Sutter Health CPMC" },
           "sFacility.03": { "_text": "20046" },
@@ -2708,7 +2708,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701007",
+        "sFacility.01": { "_text": "1701007" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Jewish Home" },
           "sFacility.03": { "_text": "20175" },
@@ -2809,7 +2809,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. Mary's Medical Center, San Francisco" },
           "sFacility.03": { "_text": "20462" },
@@ -2860,7 +2860,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. Anthony Medical Clinic" },
           "sFacility.03": { "_text": "22770" },
@@ -2911,7 +2911,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Laguna Honda Hospital and Rehabilitation Center" },
           "sFacility.03": { "_text": "20243" },
@@ -2962,7 +2962,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "CPMC Mission Bernal Campus" },
           "sFacility.03": { "_text": "20050" },
@@ -3013,7 +3013,7 @@
       "primaryPhone": "4156003247",
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701015",
+        "sFacility.01": { "_text": "1701015" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Psychiatry: California Pacific Medical Center" },
           "sFacility.03": { "_text": "64705" },
@@ -3068,7 +3068,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. Luke's Health Care Center - Adult Clinic" },
           "sFacility.03": { "_text": "22787" },
@@ -3119,7 +3119,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Wellness Clinic" },
           "sFacility.03": { "_text": "22901" },
@@ -3170,7 +3170,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Veterans Administration Medical Center, San Francisco" },
           "sFacility.03": { "_text": "20540" },
@@ -3221,7 +3221,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701017",
+        "sFacility.01": { "_text": "1701017" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "DaVita Chinatown Dialysis" },
           "sFacility.03": { "_text": "64656" },
@@ -3272,7 +3272,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "AHF Healthcare Center - San Francisco" },
           "sFacility.03": { "_text": "21795" },
@@ -3323,7 +3323,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Fort Help Mission" },
           "sFacility.03": { "_text": "22204" },
@@ -3424,7 +3424,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. James Infirmary" },
           "sFacility.03": { "_text": "22772" },
@@ -3525,7 +3525,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Native American Health Center" },
           "sFacility.03": { "_text": "22429" },
@@ -3626,7 +3626,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "On Lok Senior Health Services - Bush St" },
           "sFacility.03": { "_text": "22498" },
@@ -3724,7 +3724,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. Luke's Health Care Center - Pediatric Clinic" },
           "sFacility.03": { "_text": "22788" },
@@ -3775,7 +3775,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "South Of Market Health Center" },
           "sFacility.03": { "_text": "22760" },
@@ -3926,7 +3926,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Farol's Residential Care Home" },
           "sFacility.03": { "_text": "64681" },
@@ -4077,7 +4077,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Coventry Place" },
           "sFacility.03": { "_text": "64673" },
@@ -4179,7 +4179,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Kaiser Permanente, San Francisco" },
           "sFacility.03": { "_text": "20199" },
@@ -4230,7 +4230,7 @@
       "primaryPhone": "4154761000",
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "UCSF Medical Center at Parnassus" },
           "sFacility.03": { "_text": "20504" },
@@ -4281,7 +4281,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Drug Detoxification, Rehab And After Care Svs. Prog." },
           "sFacility.03": { "_text": "22138" },
@@ -4332,7 +4332,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "On Lok Lifeways By Institute On Aging (Ioa)" },
           "sFacility.03": { "_text": "22496" },
@@ -4533,7 +4533,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Mission Neighborhood Health Center - Valencia Clinic" },
           "sFacility.03": { "_text": "22416" },
@@ -4584,7 +4584,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "AgeSong Assisted Living" },
           "sFacility.03": { "_text": "64684" },
@@ -4635,7 +4635,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Damenik's Care Home" },
           "sFacility.03": { "_text": "64677" },
@@ -4686,7 +4686,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Menorah Park Housing" },
           "sFacility.03": { "_text": "64678" },
@@ -4737,7 +4737,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701001",
+        "sFacility.01": { "_text": "1701001" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Sagebrook Senior Living at San Francisco" },
           "sFacility.03": { "_text": "64676" },
@@ -4788,7 +4788,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Baart Market Clinic" },
           "sFacility.03": { "_text": "21908" },
@@ -4839,7 +4839,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Chinese Hospital's Excelsior Health Services" },
           "sFacility.03": { "_text": "22014" },
@@ -4890,7 +4890,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Healthright 360" },
           "sFacility.03": { "_text": "22256" },
@@ -4941,7 +4941,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Mission Neighborhood Health Ctr. - Excelsior Clinic" },
           "sFacility.03": { "_text": "22417" },
@@ -4992,7 +4992,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "Mission Neighborhood Health Center" },
           "sFacility.03": { "_text": "22415" },
@@ -5043,7 +5043,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - San Bruno Avenue" },
           "sFacility.03": { "_text": "22461" },
@@ -5094,7 +5094,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - Leland Avenue" },
           "sFacility.03": { "_text": "22463" },
@@ -5145,7 +5145,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - Noriega" },
           "sFacility.03": { "_text": "22460" },
@@ -5196,7 +5196,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - 1400 Noriega" },
           "sFacility.03": { "_text": "22457" },
@@ -5247,7 +5247,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "North East Medical Services - Clement" },
           "sFacility.03": { "_text": "22458" },
@@ -5298,7 +5298,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "On Lok Senior Health Services - Mission Center" },
           "sFacility.03": { "_text": "22503" },
@@ -5349,7 +5349,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "On Lok Senior Health Services - Powell" },
           "sFacility.03": { "_text": "22500" },
@@ -5400,7 +5400,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701003",
+        "sFacility.01": { "_text": "1701003" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "St. Luke's Health Care Center - Women's Clinic" },
           "sFacility.03": { "_text": "22789" },
@@ -5451,7 +5451,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "California Pacific Medical Center, Davies Campus Hospital" },
           "sFacility.03": { "_text": "20048" },
@@ -5502,7 +5502,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701005",
+        "sFacility.01": { "_text": "1701005" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "UCSF Benioff Children's Hospital" },
           "sFacility.03": { "_text": "62404" },
@@ -5553,7 +5553,7 @@
       "primaryPhone": null,
       "data": {
         "_attributes": { "pr:isValid": false },
-        "sFacility.01": "1701017",
+        "sFacility.01": { "_text": "1701017" },
         "sFacility.FacilityGroup": {
           "sFacility.02": { "_text": "RAI Care Center Haight San Francisco" },
           "sFacility.03": { "_text": "64648" },

@@ -166,7 +166,7 @@ module.exports = (sequelize, DataTypes) => {
                     transaction,
                   });
                   facility.data = {
-                    'sFacility.01': type,
+                    'sFacility.01': { _text: type },
                     'sFacility.FacilityGroup': sFacility,
                   };
                   if (!sFacility['sFacility.13'] && process.env.NODE_ENV !== 'test') {

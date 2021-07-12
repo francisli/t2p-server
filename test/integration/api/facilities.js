@@ -6,18 +6,12 @@ const helpers = require('../../helpers');
 const app = require('../../../app');
 
 describe('/api/facilities', () => {
-  let server;
   let testSession;
 
   beforeEach(async () => {
-    await helpers.loadFixtures(['states', 'facilities', 'users']);
-    server = app.listen(3333);
-    testSession = session(server);
+    await helpers.loadFixtures(['cities', 'counties', 'states', 'users', 'facilities']);
+    testSession = session(app);
     await testSession.post('/login').send({ email: 'admin@peakresponse.net', password: 'abcd1234' }).expect(HttpStatus.OK);
-  });
-
-  afterEach((done) => {
-    server.close(done);
   });
 
   describe('GET /', () => {
@@ -25,10 +19,10 @@ describe('/api/facilities', () => {
       const response = await testSession
         .get('/api/facilities/')
         .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '103')
+        .expect('X-Total-Count', '127')
         .expect(
           'Link',
-          '<http://127.0.0.1:3333/api/facilities/?page=2>; rel="next",<http://127.0.0.1:3333/api/facilities/?page=5>; rel="last"'
+          /<http:\/\/127.0.0.1:\d+\/api\/facilities\/\?page=2>; rel="next",<http:\/\/127.0.0.1:\d+\/api\/facilities\/\?page=6>; rel="last"/
         );
       assert.deepStrictEqual(response.body.length, 25);
     });
@@ -38,19 +32,19 @@ describe('/api/facilities', () => {
         .get('/api/facilities/')
         .query({ type: '1701005' })
         .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '9');
-      assert.deepStrictEqual(response.body.length, 9);
+        .expect('X-Total-Count', '16');
+      assert.deepStrictEqual(response.body.length, 16);
     });
 
     it('returns a paginated list of Facility records near the lat/lng', async () => {
       const response = await testSession
         .get('/api/facilities/')
-        .query({ lat: '37.7873437', lng: '-122.4536086' })
+        .query({ lat: '37.7866029', lng: '-122.4560444' })
         .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '103')
+        .expect('X-Total-Count', '127')
         .expect(
           'Link',
-          '<http://127.0.0.1:3333/api/facilities/?lat=37.7873437&lng=-122.4536086&page=2>; rel="next",<http://127.0.0.1:3333/api/facilities/?lat=37.7873437&lng=-122.4536086&page=5>; rel="last"'
+          /<http:\/\/127.0.0.1:\d+\/api\/facilities\/\?lat=37.7866029&lng=-122.4560444&page=2>; rel="next",<http:\/\/127.0.0.1:\d+\/api\/facilities\/\?lat=37.7866029&lng=-122.4560444&page=6>; rel="last"/
         );
       assert.deepStrictEqual(response.body.length, 25);
       assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');
@@ -59,12 +53,12 @@ describe('/api/facilities', () => {
     it('returns a paginated list of search filtered Facility records near the lat/lng', async () => {
       const response = await testSession
         .get('/api/facilities/')
-        .query({ lat: '37.7873437', lng: '-122.4536086' })
+        .query({ lat: '37.7866029', lng: '-122.4560444' })
         .query({ search: 'cpmc' })
         .expect(HttpStatus.OK)
-        .expect('X-Total-Count', '7')
+        .expect('X-Total-Count', '8')
         .expect('Link', '');
-      assert.deepStrictEqual(response.body.length, 7);
+      assert.deepStrictEqual(response.body.length, 8);
       assert.deepStrictEqual(response.body[0].name, 'CPMC - 3801 Sacramento Street');
       for (const facility of response.body) {
         assert(facility.name.match(/cpmc/i));
