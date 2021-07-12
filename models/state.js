@@ -6,6 +6,7 @@ const _ = require('lodash');
 const path = require('path');
 
 const nemsis = require('../lib/nemsis');
+const CommonTypes = require('../lib/nemsis/commonTypes');
 const nemsisStates = require('../lib/nemsis/states');
 
 const stateCodes = {
@@ -121,65 +122,83 @@ module.exports = (sequelize, DataTypes) => {
           await nemsisStates[repo.slug].processStateRepoFiles(sequelize.models, tmpDir, files.values, dataSet);
         }
         // add associated Agencies from the state data set
-        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Populating state agencies...');
         if (dataSet.json.StateDataSet.sAgency && dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
           if (!Array.isArray(dataSet.json.StateDataSet.sAgency.sAgencyGroup)) {
             dataSet.json.StateDataSet.sAgency.sAgencyGroup = [dataSet.json.StateDataSet.sAgency.sAgencyGroup];
           }
-          await sequelize.transaction(async (transaction) => {
-            for (const sAgency of dataSet.json.StateDataSet.sAgency.sAgencyGroup) {
-              const [agency] = await sequelize.models.Agency.findOrBuild({
-                where: {
-                  stateUniqueId: sAgency['sAgency.01']._text,
-                  number: sAgency['sAgency.02']._text,
-                  stateId: this.id,
-                },
-                transaction,
-              });
-              agency.name = sAgency['sAgency.03']._text;
-              agency.data = sAgency;
-              agency.createdById = userId;
-              agency.updatedById = userId;
-              await agency.save({ transaction });
-            }
-          });
+          const { length } = dataSet.json.StateDataSet.sAgency.sAgencyGroup;
+          for (let i = 0; i < length; i += 100) {
+            await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating state agencies... ${i}/${length}`);
+            await sequelize.transaction(async (transaction) => {
+              for (let j = i; j < Math.min(i + 100, length); j += 1) {
+                const sAgency = dataSet.json.StateDataSet.sAgency.sAgencyGroup[j];
+                const [agency] = await sequelize.models.Agency.findOrBuild({
+                  where: {
+                    stateUniqueId: sAgency['sAgency.01']._text,
+                    number: sAgency['sAgency.02']._text,
+                    stateId: this.id,
+                  },
+                  transaction,
+                });
+                agency.name = sAgency['sAgency.03']._text;
+                agency.data = sAgency;
+                agency.createdById = userId;
+                agency.updatedById = userId;
+                await agency.save({ transaction });
+              }
+            });
+          }
+          await this.setConfigurationStatus(HttpStatus.ACCEPTED, `Populating state agencies... ${length}/${length}`);
         }
         // add associated Facilities from state data set
-        await this.setConfigurationStatus(HttpStatus.ACCEPTED, 'Populating state facilities...');
         if (dataSet.json.StateDataSet.sFacility && dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
           if (!Array.isArray(dataSet.json.StateDataSet.sFacility.sFacilityGroup)) {
             dataSet.json.StateDataSet.sFacility.sFacilityGroup = [dataSet.json.StateDataSet.sFacility.sFacilityGroup];
           }
-          await sequelize.transaction(async (transaction) => {
-            for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
-              const type = sFacilityGroup['sFacility.01']._text;
-              if (sFacilityGroup['sFacility.FacilityGroup']) {
-                if (!Array.isArray(sFacilityGroup['sFacility.FacilityGroup'])) {
-                  sFacilityGroup['sFacility.FacilityGroup'] = [sFacilityGroup['sFacility.FacilityGroup']];
-                }
-                for (const sFacility of sFacilityGroup['sFacility.FacilityGroup']) {
-                  const [facility] = await sequelize.models.Facility.findOrBuild({
-                    where: {
-                      stateId: sFacility['sFacility.09']?._text || null,
-                      locationCode: sFacility['sFacility.03']?._text || null,
-                    },
-                    transaction,
-                  });
-                  facility.data = {
-                    'sFacility.01': { _text: type },
-                    'sFacility.FacilityGroup': sFacility,
-                  };
-                  if (!sFacility['sFacility.13'] && process.env.NODE_ENV !== 'test') {
-                    /// don't perform in test, so we don't exceed request quotas
-                    await facility.geocode();
-                  }
-                  facility.createdById = userId;
-                  facility.updatedById = userId;
-                  await facility.save({ transaction });
-                }
+          for (const sFacilityGroup of dataSet.json.StateDataSet.sFacility.sFacilityGroup) {
+            const type = sFacilityGroup['sFacility.01']?._text;
+            if (sFacilityGroup['sFacility.FacilityGroup']) {
+              if (!Array.isArray(sFacilityGroup['sFacility.FacilityGroup'])) {
+                sFacilityGroup['sFacility.FacilityGroup'] = [sFacilityGroup['sFacility.FacilityGroup']];
               }
+              const { length } = sFacilityGroup['sFacility.FacilityGroup'];
+              for (let i = 0; i < length; i += 10) {
+                await this.setConfigurationStatus(
+                  HttpStatus.ACCEPTED,
+                  `Populating state ${type ? CommonTypes.enums.TypeOfFacility.valueMapping[type] : ''} facilities... ${i}/${length}`
+                );
+                await sequelize.transaction(async (transaction) => {
+                  for (let j = i; j < Math.min(i + 10, length); j += 1) {
+                    const sFacility = sFacilityGroup['sFacility.FacilityGroup'][j];
+                    const [facility] = await sequelize.models.Facility.findOrBuild({
+                      where: {
+                        stateId: sFacility['sFacility.09']?._text || null,
+                        locationCode: sFacility['sFacility.03']?._text || null,
+                      },
+                      transaction,
+                    });
+                    facility.data = {
+                      'sFacility.FacilityGroup': sFacility,
+                    };
+                    if (type) {
+                      facility.data['sFacility.01'] = { _text: type };
+                    }
+                    if (!sFacility['sFacility.13'] && process.env.NODE_ENV !== 'test') {
+                      /// don't perform in test, so we don't exceed request quotas
+                      await facility.geocode();
+                    }
+                    facility.createdById = userId;
+                    facility.updatedById = userId;
+                    await facility.save({ transaction });
+                  }
+                });
+              }
+              await this.setConfigurationStatus(
+                HttpStatus.ACCEPTED,
+                `Populating state ${type ? CommonTypes.enums.TypeOfFacility.valueMapping[type] : ''} facilities... ${length}/${length}`
+              );
             }
-          });
+          }
         }
         await this.update({
           isConfigured: true,
