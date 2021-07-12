@@ -13,6 +13,8 @@ describe('/api/patients', () => {
   beforeEach(async () => {
     await helpers.loadFixtures([
       'users',
+      'cities',
+      'counties',
       'states',
       'agencies',
       'facilities',
@@ -54,10 +56,10 @@ describe('/api/patients', () => {
         patient.isTransported = true;
         if (i < 4) {
           patient.transportAgencyId = 'e705f64b-1399-436e-a428-18c8378b3444';
-          patient.transportFacilityId = '7d47a57b-f20b-4c09-83ab-2972ac7ad431';
+          patient.transportFacilityId = '104a7a04-b05f-4200-8d7d-c45124012d19';
         } else {
           patient.transportAgencyId = '5de082f2-3242-43be-bc2b-6e9396815b4f';
-          patient.transportFacilityId = 'fbb448ba-eb2b-4070-97d6-4ab6f13263ad';
+          patient.transportFacilityId = 'b1a137ab-2625-4ecc-9dcd-41683a63bfa1';
         }
         // eslint-disable-next-line no-await-in-loop
         await patient.save();
@@ -76,26 +78,26 @@ describe('/api/patients', () => {
             assert(data.transportAgency);
             assert.deepStrictEqual(data.transportAgency.id, 'e705f64b-1399-436e-a428-18c8378b3444');
             assert(data.transportFacility);
-            assert.deepStrictEqual(data.transportFacility.id, '7d47a57b-f20b-4c09-83ab-2972ac7ad431');
+            assert.deepStrictEqual(data.transportFacility.id, '104a7a04-b05f-4200-8d7d-c45124012d19');
           } else {
             /// the rest should just have id
             assert(!data.transportAgency);
             assert.deepStrictEqual(data.transportAgencyId, 'e705f64b-1399-436e-a428-18c8378b3444');
             assert(!data.transportFacility);
-            assert.deepStrictEqual(data.transportFacilityId, '7d47a57b-f20b-4c09-83ab-2972ac7ad431');
+            assert.deepStrictEqual(data.transportFacilityId, '104a7a04-b05f-4200-8d7d-c45124012d19');
           }
         } else if (i === 4) {
           /// we should have a full serialized object for the first record
           assert(data.transportAgency);
           assert.deepStrictEqual(data.transportAgency.id, '5de082f2-3242-43be-bc2b-6e9396815b4f');
           assert(data.transportFacility);
-          assert.deepStrictEqual(data.transportFacility.id, 'fbb448ba-eb2b-4070-97d6-4ab6f13263ad');
+          assert.deepStrictEqual(data.transportFacility.id, 'b1a137ab-2625-4ecc-9dcd-41683a63bfa1');
         } else {
           /// the rest should just have id
           assert(!data.transportAgency);
           assert.deepStrictEqual(data.transportAgencyId, '5de082f2-3242-43be-bc2b-6e9396815b4f');
           assert(!data.transportFacility);
-          assert.deepStrictEqual(data.transportFacilityId, 'fbb448ba-eb2b-4070-97d6-4ab6f13263ad');
+          assert.deepStrictEqual(data.transportFacilityId, 'b1a137ab-2625-4ecc-9dcd-41683a63bfa1');
         }
         i += 1;
       }
